@@ -176,11 +176,11 @@ class NfseService
                 infDps: new InfDpsData(
                     id: $idDps,
                     tipoAmbiente: $context->ambiente,
-                    dataEmissao: date('c'),
+                    dataEmissao: (new \DateTime('now', new \DateTimeZone('America/Sao_Paulo')))->format('c'),
                     versaoAplicativo: 'ConsolidaERP-1.0',
                     serie: $serieDps,
                     numeroDps: $numeroDps,
-                    dataCompetencia: date('Y-m-d'),
+                    dataCompetencia: (new \DateTime('now', new \DateTimeZone('America/Sao_Paulo')))->format('Y-m-d'),
                     tipoEmitente: EmitenteDPS::Prestador,
                     codigoLocalEmissao: $codigoMunicipioEmpresa,
                     prestador: $prestador,
