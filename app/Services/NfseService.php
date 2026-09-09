@@ -27,6 +27,7 @@ use Nfse\Dto\Nfse\ValoresData;
 use Nfse\Dto\Nfse\ValorServicoPrestadoData;
 use Nfse\Dto\Nfse\TributacaoData;
 use Nfse\Support\IdGenerator;
+use Nfse\Xml\DpsXmlBuilder;
 
 class NfseService
 {
@@ -179,6 +180,8 @@ class NfseService
                 ),
             );
 
+            $xmlDebug = (new DpsXmlBuilder)->build($dps);
+
             $nfseData = $service->emitir($dps);
 
             return [
@@ -194,6 +197,7 @@ class NfseService
             return [
                 'success' => false,
                 'error' => $e->getMessage(),
+                'debug_xml_enviado' => $xmlDebug ?? null,
             ];
         }
     }
