@@ -9,6 +9,7 @@ use Nfse\Http\NfseContext;
 use Nfse\Enums\TipoAmbiente;
 use Nfse\Enums\EmitenteDPS;
 use Nfse\Enums\OpcaoSimplesNacional;
+use Nfse\Enums\RegimeApuracaoSN;
 use Nfse\Enums\RegimeEspecialTributacao;
 use Nfse\Enums\TributacaoIssqn;
 use Nfse\Enums\TipoRetencaoIssqn;
@@ -105,13 +106,19 @@ class NfseService
 
             $idDps = IdGenerator::generateDpsId($cnpjPrestador, $codigoMunicipioEmpresa, $serieDps, $numeroDps);
 
+            // regApTribSN é obrigatório quando opSimpNac=3 (ME/EPP optante do Simples Nacional).
+            $regimeTributarioParams = [
+                'opcaoSimplesNacional' => OpcaoSimplesNacional::from((string) $empresa['opsimpnac']),
+                'regimeEspecialTributacao' => RegimeEspecialTributacao::Nenhum,
+            ];
+            if ((string) $empresa['opsimpnac'] === '3') {
+                $regimeTributarioParams['regimeApuracaoTributosSn'] = RegimeApuracaoSN::from((string) ($empresa['regime_apuracao_sn'] ?? '1'));
+            }
+
             $prestador = new PrestadorData(
                 cnpj: $cnpjPrestador,
                 inscricaoMunicipal: !empty($empresa['im']) ? (string) $empresa['im'] : null,
-                regimeTributario: new RegimeTributarioData(
-                    opcaoSimplesNacional: OpcaoSimplesNacional::from((string) $empresa['opsimpnac']),
-                    regimeEspecialTributacao: RegimeEspecialTributacao::Nenhum,
-                ),
+                regimeTributario: new RegimeTributarioData(...$regimeTributarioParams),
             );
 
             $issRetido = !empty($servico['iss_retido']);
