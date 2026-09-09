@@ -23,6 +23,7 @@ class NfseController extends Controller
             'empresa.im' => 'nullable|string',
             'empresa.codigo_municipio' => 'required|string',
             'empresa.opsimpnac' => 'required|in:1,2,3',
+            'empresa.percentual_tributos_sn' => 'required_if:empresa.opsimpnac,3|nullable|numeric',
             'empresa.cert_base64' => 'required|string',
             'empresa.cert_senha' => 'required|string',
             'tomador.documento' => 'required|string',
