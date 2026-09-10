@@ -160,11 +160,17 @@ class NfseService
             // só monta o grupo totTrib se informarmos o percentual aproximado de tributos
             // (Lei 12.741/2012). Fora do Simples Nacional, usamos o indicador "nenhum".
             $isSimplesNacional = (string) $empresa['opsimpnac'] === '3';
+            $apuracaoTotalmentePeloSn = (string) ($empresa['regime_apuracao_sn'] ?? '1') === '1';
             $tributacaoParams = [
                 'tributacaoIssqn' => TributacaoIssqn::OperacaoTributavel,
                 'tipoRetencaoIssqn' => $issRetido ? TipoRetencaoIssqn::RetidoTomador : TipoRetencaoIssqn::NaoRetido,
-                'aliquota' => (float) $servico['aliquota_iss'],
             ];
+            // Quando a empresa é ME/EPP com apuração 100% pelo Simples Nacional e o ISS
+            // não é retido pelo tomador, o ISS é calculado pela guia do SN — não é
+            // permitido informar alíquota nesse caso (E0625).
+            if (!($isSimplesNacional && $apuracaoTotalmentePeloSn && !$issRetido)) {
+                $tributacaoParams['aliquota'] = (float) $servico['aliquota_iss'];
+            }
             if ($isSimplesNacional) {
                 $tributacaoParams['percentualTotalTributosSN'] = (float) ($empresa['percentual_tributos_sn'] ?? 0);
             } else {
