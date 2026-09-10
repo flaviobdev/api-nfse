@@ -201,13 +201,18 @@ class NfseService
 
             $nfseData = $service->emitir($dps);
 
+            $chaveAcesso = $nfseData->infNfse->id ?? null;
+
             return [
                 'success' => true,
                 'data' => [
                     'idDps' => $idDps,
-                    'chaveAcesso' => $nfseData->infNfse->id ?? null,
+                    'chaveAcesso' => $chaveAcesso,
                     'numeroNfse' => $nfseData->infNfse->numeroNfse ?? null,
-                    'nfseXml' => $nfseData->nfseXml,
+                    // A NfseData retornada por ContribuinteService::emitir() não vem com o
+                    // XML bruto preenchido, então buscamos ele de novo via consulta (mesmo
+                    // caminho já usado e testado pelo recebimento).
+                    'nfseXml' => $chaveAcesso ? $this->xml($empresa, $chaveAcesso) : null,
                 ],
             ];
         } catch (Exception $e) {
