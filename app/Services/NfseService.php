@@ -208,6 +208,9 @@ class NfseService
             $nfseData = $service->emitir($dps);
 
             $chaveAcesso = $nfseData->infNfse->id ?? null;
+            if ($chaveAcesso) {
+                $chaveAcesso = preg_replace('/\D/', '', $chaveAcesso);
+            }
 
             return [
                 'success' => true,
