@@ -465,17 +465,24 @@ class NfseService
     }
 
 
+    /**
+     * Gera o DANFSe (PDF) a partir do XML autorizado da NFS-e.
+     *
+     * A API de geração do DANFSe do Ambiente Nacional foi suspensa pela
+     * NT-008/2026 e responde 503 desde então (o antigo
+     * $service->downloadDanfse() está depreciado na SDK). O documento auxiliar
+     * passou a ser responsabilidade do sistema emissor, então montamos o PDF
+     * aqui a partir do XML da nota.
+     */
     public function downloadPdf(array $empresa, string $chave): string
     {
-        try {
-            $context = $this->criarContexto($empresa);
-            $nfse = new Nfse($context);
-            $service = $nfse->contribuinte();
+        $xml = $this->xml($empresa, $chave);
 
-            return $service->downloadDanfse($chave);
-        } catch (Exception $e) {
-            throw $e;
+        if ($xml === '') {
+            throw new Exception('Nao foi possivel obter o XML da NFS-e na SEFIN Nacional para gerar o DANFSe.');
         }
+
+        return (new DanfseRenderer)->render($xml);
     }
 
 
