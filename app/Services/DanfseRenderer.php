@@ -107,7 +107,10 @@ class DanfseRenderer
             'competencia' => $this->data($this->t($dps, 'dCompet')),
             'serie' => $this->t($dps, 'serie'),
             'numeroDps' => $this->t($dps, 'nDPS'),
-            'homologacao' => $this->t($dps, 'tpAmb') === '2' || $this->t($inf, 'ambGer') === '2',
+            // Só o tpAmb da DPS diz produção x homologação. O ambGer da NFS-e é
+            // o ambiente GERADOR (1-Prefeitura, 2-Sistema Nacional) e não tem
+            // relação com isso.
+            'homologacao' => $this->t($dps, 'tpAmb') === '2',
             'localEmissao' => $localEmissao,
             'localPrestacao' => $this->t($inf, 'xLocPrestacao'),
             'localIncidencia' => $this->t($inf, 'xLocIncid'),
