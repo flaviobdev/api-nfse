@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<NFSe xmlns="http://www.sped.fazenda.gov.br/nfse"
+      versao="1.00">
+	<infNFSe Id="NFS23140031100098765432100000000000004625120025708585">
+		<xLocEmi>VARZEA ALEGRE</xLocEmi>
+		<xLocPrestacao>VARZEA ALEGRE</xLocPrestacao>
+		<nNFSe>46</nNFSe>
+		<cLocIncid>2314003</cLocIncid>
+		<xLocIncid>VARZEA ALEGRE</xLocIncid>
+		<xTribNac>Enfermagem, inclusive serviços auxiliares.</xTribNac>
+		<xTribMun>04.06 - Enfermagem, inclusive serviços auxiliares.</xTribMun>
+		<verAplic>Sistema NFS-e</verAplic>
+		<ambGer>1</ambGer>
+		<tpEmis>2</tpEmis>
+		<cStat>100</cStat>
+		<dhProc>2025-12-15T11:11:09-03:00</dhProc>
+		<nDFSe>46</nDFSe>
+		<emit>
+			<CPF>98765432100</CPF>
+			<xNome>PRESTADORA TESTE PESSOA FISICA</xNome>
+			<enderNac>
+				<xLgr>RUA DE TESTE, 109</xLgr>
+				<nro>-</nro>
+				<xCpl>-</xCpl>
+				<xBairro>ALTO DA PREFEITURA</xBairro>
+				<cMun>2314003</cMun>
+				<UF>CE</UF>
+				<CEP>63540000</CEP>
+			</enderNac>
+			<email>prestadora@example.com</email>
+		</emit>
+		<valores>
+			<vBC>1850.00</vBC>
+			<pAliqAplic>5.00</pAliqAplic>
+			<vISSQN>92.50</vISSQN>
+			<vLiq>1757.50</vLiq>
+		</valores>
+		<DPS versao="1.00">
+			<infDPS Id="DPS231400310009876543210000001000000000000046">
+				<tpAmb>1</tpAmb>
+				<dhEmi>2025-12-15T11:11:09-03:00</dhEmi>
+				<verAplic>Sistema NFS-e</verAplic>
+				<serie>00001</serie>
+				<nDPS>46</nDPS>
+				<dCompet>2025-12-15</dCompet>
+				<tpEmit>1</tpEmit>
+				<cLocEmi>2314003</cLocEmi>
+				<prest>
+					<CPF>98765432100</CPF>
+					<email>prestadora@example.com</email>
+					<regTrib>
+						<opSimpNac>1</opSimpNac>
+						<regEspTrib>0</regEspTrib>
+					</regTrib>
+				</prest>
+				<toma>
+					<CNPJ>11222333000181</CNPJ>
+					<xNome>TOMADOR TESTE PESSOA JURIDICA</xNome>
+					<end>
+						<endNac>
+							<cMun>2314003</cMun>
+							<CEP>63540000</CEP>
+						</endNac>
+						<xLgr>AVENIDA DE TESTE, 153</xLgr>
+						<nro>-</nro>
+						<xBairro>CENTRO</xBairro>
+					</end>
+				</toma>
+				<serv>
+					<locPrest>
+						<cLocPrestacao>2314003</cLocPrestacao>
+					</locPrest>
+					<cServ>
+						<cTribNac>040601</cTribNac>
+						<xDescServ>(VALOR EMPENHADO PARA ATENDER DESPESAS COM CREDENCIAMENTO DE PROFISSIONAIS ESPECIALIZADOS COMO  TECNICA DE ENFERMAGEM PARA COMPLEMENTAR A EQUIPE DE ATENÇÃO DOMICILIAR (EMAD) E A EQUIPE MULTIPROFISSIONAL  DE APOIO (EMAP), NO ÂMBITO DO SISTEMA ÚNICO DE SAÚDE (SUS), CONFORME TERMO DE REFERÊNCIA, A SEREM PRESTADOS  NESTA CIDADE, ATRAVÉS DA SECRETARIA MUNICIPAL DE SAÚDE DE VÁRZEA ALEGRE/CE,CONFORME PROCESSO DE Nº003-2024 E  CONTRATO DE Nº2024.03.06.1,) </xDescServ>
+						<cNBS>123019100</cNBS>
+					</cServ>
+				</serv>
+				<valores>
+					<vServPrest>
+						<vServ>1850.00</vServ>
+					</vServPrest>
+					<trib>
+						<tribMun>
+							<tribISSQN>1</tribISSQN>
+							<tpRetISSQN>2</tpRetISSQN>
+						</tribMun>
+						<totTrib>
+							<indTotTrib>0</indTotTrib>
+						</totTrib>
+					</trib>
+				</valores>
+			</infDPS>
+		</DPS>
+	</infNFSe>
+	<Signature xmlns="http://www.w3.org/2000/09/xmldsig#">
+		<SignedInfo>
+			<CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/>
+			<SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1"/>
+			<Reference URI="">
+				<Transforms>
+					<Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"/>
+				</Transforms>
+				<DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"/>
+				<DigestValue>OtQyi5k/d5dfo7S3zGIdlxn2EEE=</DigestValue>
+			</Reference>
+		</SignedInfo>
+		<SignatureValue>ASSINATURA-REMOVIDA</SignatureValue>
+		<KeyInfo>
+			<X509Data>
+				<X509Certificate>CERTIFICADO-REMOVIDO</X509Certificate>
+			</X509Data>
+		</KeyInfo>
+	</Signature>
+</NFSe>
