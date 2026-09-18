@@ -79,6 +79,23 @@ class DanfseRendererTest extends TestCase
         $this->assertFalse($dados['homologacao']);
     }
 
+    public function test_nota_de_producao_gerada_pelo_sistema_nacional_nao_e_marcada_como_homologacao(): void
+    {
+        // ambGer=2 (gerada pelo Sistema Nacional, não pela prefeitura) com
+        // tpAmb=1: é produção, não pode sair com a tarja de homologação.
+        $xml = str_replace('<tpAmb>2</tpAmb>', '<tpAmb>1</tpAmb>', $this->xmlCnpj());
+
+        $this->assertStringContainsString('<ambGer>2</ambGer>', $xml);
+
+        $dados = (new DanfseRenderer)->dados($xml);
+
+        $this->assertFalse($dados['homologacao']);
+        $this->assertStringNotContainsString(
+            'HOMOLOGAÇÃO',
+            (new DanfseRenderer)->html($xml)
+        );
+    }
+
     public function test_o_html_do_danfse_traz_os_campos_obrigatorios(): void
     {
         $html = (new DanfseRenderer)->html($this->xmlCnpj());
