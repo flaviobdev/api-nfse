@@ -28,7 +28,6 @@ use Nfse\Dto\Nfse\ValoresData;
 use Nfse\Dto\Nfse\ValorServicoPrestadoData;
 use Nfse\Dto\Nfse\TributacaoData;
 use Nfse\Support\IdGenerator;
-use Nfse\Xml\DpsXmlBuilder;
 
 class NfseService
 {
@@ -98,8 +97,7 @@ class NfseService
     {
         try {
             $context = $this->criarContexto($empresa);
-            $nfse = new Nfse($context);
-            $service = $nfse->contribuinte();
+            $emissor = new EmissorDps($context, (bool) config('services.nfse.leiaute_nt009_producao'));
 
             $cnpjPrestador = preg_replace('/\D+/', '', (string) $empresa['cnpj']);
             $codigoMunicipioEmpresa = preg_replace('/\D+/', '', (string) $empresa['codigo_municipio']);
@@ -203,9 +201,9 @@ class NfseService
                 ),
             );
 
-            $xmlDebug = (new DpsXmlBuilder)->build($dps);
+            $xmlDebug = $emissor->montarXml($dps);
 
-            $nfseData = $service->emitir($dps);
+            $nfseData = $emissor->emitir($dps);
 
             $chaveAcesso = $nfseData->infNfse->id ?? null;
             if ($chaveAcesso) {
