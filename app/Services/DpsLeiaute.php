@@ -10,6 +10,7 @@ class DpsLeiaute
 {
     private const NAMESPACE_NFSE = 'http://www.sped.fazenda.gov.br/nfse';
     private const FINALIDADE_REGULAR = '0';
+    private const DESTINATARIO_E_TOMADOR = '0';
     private const ORDEM_APOS_TPEMIT_VIGENTE = ['cMotivoEmisTI', 'chNFSeRej', 'cLocEmi'];
     private const ORDEM_APOS_TPEMIT_NT009 = ['cMotivoEmisTI', 'finNFSe', 'chNFSeRej', 'cLocEmi'];
 
@@ -33,6 +34,7 @@ class DpsLeiaute
                 $infDps->appendChild($dom->createElementNS(self::NAMESPACE_NFSE, 'finNFSe', self::FINALIDADE_REGULAR));
             }
             $this->ordenarAposTpEmit($xpath, $infDps, self::ORDEM_APOS_TPEMIT_NT009);
+            $this->inserirIndicadorDestinatario($dom, $xpath, $infDps);
         }
 
         foreach ($xpath->query('/n:DPS/n:infDPS/n:serv/n:cServ') as $cServ) {
@@ -80,6 +82,21 @@ class DpsLeiaute
             }
             $anterior = $elemento;
         }
+    }
+
+    private function inserirIndicadorDestinatario(DOMDocument $dom, DOMXPath $xpath, DOMElement $infDps): void
+    {
+        if ($this->filho($xpath, $infDps, 'indDest') !== null) {
+            return;
+        }
+
+        $anterior = $this->filho($xpath, $infDps, 'toma') ?? $this->filho($xpath, $infDps, 'prest');
+        if ($anterior === null) {
+            return;
+        }
+
+        $indicador = $dom->createElementNS(self::NAMESPACE_NFSE, 'indDest', self::DESTINATARIO_E_TOMADOR);
+        $infDps->insertBefore($indicador, $anterior->nextSibling);
     }
 
     private function filho(DOMXPath $xpath, DOMElement $pai, string $nome): ?DOMElement
